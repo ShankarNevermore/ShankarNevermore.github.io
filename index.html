@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Ponn Siva Shankar Sekar — Data · Marketing · AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100;200;300;400;500;600;700&family=Geist+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#080808; --surface:#0f0f0f; --surface2:#1a1a1a;
+  --border:rgba(255,255,255,.09); --border-hi:rgba(255,255,255,.18);
+  --text:#e8e8e8; --muted:#777; --muted2:#444;
+  --accent-dim:rgba(232,232,232,.04); --green:#4ade80;
+  --orange:#f97316;
+  --font-sans:'Geist',sans-serif; --font-mono:'Geist Mono',monospace;
+  --gap:160px; --radius:12px; --nav-h:60px;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:var(--font-sans);font-size:16px;line-height:1.6;overflow-x:hidden;cursor:none;-webkit-font-smoothing:antialiased;}
+
+/* CURSOR */
+#cursor{position:fixed;width:8px;height:8px;background:var(--text);border-radius:50%;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);transition:width .2s,height .2s;}
+#cursor-ring{position:fixed;width:32px;height:32px;border:1px solid rgba(232,232,232,.25);border-radius:50%;pointer-events:none;z-index:99998;transform:translate(-50%,-50%);}
+body:has(.magnetic:hover) #cursor{width:0;height:0;}
+body:has(.magnetic:hover) #cursor-ring{width:54px;height:54px;border-color:rgba(232,232,232,.5);}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;padding:0 48px;background:rgba(8,8,8,.92);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);}
+.nav-logo{font-family:var(--font-mono);font-size:.8rem;color:rgba(232,232,232,.6);text-decoration:none;letter-spacing:.04em;transition:color .2s;}
+.nav-logo:hover{color:var(--text);}
+.nav-links{display:flex;gap:28px;list-style:none;}
+.nav-links a{font-size:.75rem;font-weight:300;color:var(--muted);text-decoration:none;letter-spacing:.02em;transition:color .2s;}
+.nav-links a:hover,.nav-links a.active-nav{color:var(--text);}
+.nav-photo-link{opacity:.6;}
+.nav-photo-link:hover{opacity:1!important;}
+.nav-right{display:flex;align-items:center;gap:14px;}
+.nav-status{display:flex;align-items:center;gap:7px;font-family:var(--font-mono);font-size:.65rem;color:var(--green);}
+.ndot{width:5px;height:5px;background:var(--green);border-radius:50%;box-shadow:0 0 7px var(--green);animation:npulse 2.4s ease-in-out infinite;}
+@keyframes npulse{0%,100%{opacity:1}50%{opacity:.3}}
+.lang-toggle{display:flex;border:1px solid var(--border);border-radius:6px;overflow:hidden;}
+.lang-btn{font-family:var(--font-mono);font-size:.62rem;padding:5px 11px;background:none;border:none;color:var(--muted);cursor:none;letter-spacing:.06em;transition:all .2s;}
+.lang-btn.active{background:var(--surface2);color:var(--text);}
+
+/* LAYOUT */
+.wrap{max-width:1140px;margin:0 auto;padding:0 48px;}
+section{padding:var(--gap) 0;}
+section+section{border-top:1px solid var(--border);}
+
+/* SCROLL REVEAL */
+[data-r]{opacity:0;transform:translateY(36px);transition:opacity .8s var(--ease),transform .8s var(--ease);}
+[data-r].in{opacity:1;transform:none;}
+[data-r="fade"]{transform:none;}
+[data-r="left"]{transform:translateX(-36px);}
+[data-r="left"].in{transform:none;}
+[data-r="scale"]{transform:scale(.95) translateY(20px);}
+[data-r="scale"].in{transform:none;}
+[data-sg]>*{opacity:0;transform:translateY(28px);transition:opacity .7s var(--ease),transform .7s var(--ease);}
+[data-sg].in>*:nth-child(1){opacity:1;transform:none;transition-delay:.04s;}
+[data-sg].in>*:nth-child(2){opacity:1;transform:none;transition-delay:.10s;}
+[data-sg].in>*:nth-child(3){opacity:1;transform:none;transition-delay:.16s;}
+[data-sg].in>*:nth-child(4){opacity:1;transform:none;transition-delay:.22s;}
+[data-sg].in>*:nth-child(5){opacity:1;transform:none;transition-delay:.28s;}
+[data-sg].in>*:nth-child(6){opacity:1;transform:none;transition-delay:.34s;}
+[data-sg].in>*:nth-child(7){opacity:1;transform:none;transition-delay:.40s;}
+[data-sg].in>*:nth-child(8){opacity:1;transform:none;transition-delay:.46s;}
+[data-sg].in>*:nth-child(9){opacity:1;transform:none;transition-delay:.52s;}
+[data-sg].in>*:nth-child(10){opacity:1;transform:none;transition-delay:.58s;}
+[data-sg].in>*:nth-child(11){opacity:1;transform:none;transition-delay:.64s;}
+[data-sg].in>*:nth-child(12){opacity:1;transform:none;transition-delay:.70s;}
+
+/* LABELS & HEADINGS */
+.s-label{display:inline-flex;align-items:center;gap:10px;font-family:var(--font-mono);font-size:.65rem;color:var(--muted2);letter-spacing:.14em;text-transform:uppercase;margin-bottom:20px;}
+.s-label::before{content:'';display:block;width:14px;height:1px;background:var(--muted2);}
+.s-title{font-size:clamp(2rem,4vw,3rem);font-weight:200;letter-spacing:-.04em;line-height:1.05;margin-bottom:14px;}
+.s-title b{font-weight:500;}
+.s-deck{font-size:.93rem;font-weight:300;color:var(--muted);max-width:460px;line-height:1.8;}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:.74rem;font-weight:400;letter-spacing:.06em;padding:13px 24px;border-radius:8px;text-decoration:none;cursor:none;transition:all .25s var(--ease);}
+.btn-p{background:var(--text);color:var(--bg);border:1px solid var(--text);}
+.btn-p:hover{background:#ccc;border-color:#ccc;}
+.btn-g{background:none;color:var(--muted);border:1px solid var(--border);}
+.btn-g:hover{border-color:var(--border-hi);color:var(--text);}
+.magnetic{display:inline-block;}
+
+/* HERO */
+#hero{min-height:100vh;padding-top:var(--nav-h);display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden;}
+.hero-glow{position:absolute;width:800px;height:800px;background:radial-gradient(circle,rgba(255,255,255,.025) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;}
+.hero-grid-bg{position:absolute;inset:0;pointer-events:none;}
+.hero-grid-bg::before{content:'';position:absolute;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:80px 80px;mask-image:radial-gradient(ellipse 80% 60% at 50% 50%,black,transparent);opacity:.7;}
+.hero-inner{position:relative;z-index:1;}
+.hero-eyebrow{font-family:var(--font-mono);font-size:.7rem;font-weight:300;color:var(--muted);letter-spacing:.14em;text-transform:uppercase;margin-bottom:32px;opacity:0;animation:hIn .8s .1s var(--ease) forwards;}
+.hero-name{font-size:clamp(3.6rem,9vw,8.5rem);font-weight:200;letter-spacing:-.06em;line-height:.9;margin-bottom:40px;opacity:0;animation:hIn .9s .2s var(--ease) forwards;}
+.hero-name b{font-weight:500;}
+.hero-roles{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:40px;opacity:0;animation:hIn .8s .35s var(--ease) forwards;}
+.rp{font-family:var(--font-mono);font-size:.66rem;font-weight:300;padding:6px 14px;border:1px solid var(--border);border-radius:100px;color:var(--muted);letter-spacing:.04em;transition:border-color .2s,color .2s;}
+.rp:hover{border-color:var(--border-hi);color:var(--text);}
+.hero-tagline{font-size:1.02rem;font-weight:300;color:var(--muted);max-width:540px;line-height:1.82;margin-bottom:48px;opacity:0;animation:hIn .8s .48s var(--ease) forwards;}
+.hero-ctas{display:flex;gap:12px;flex-wrap:wrap;opacity:0;animation:hIn .8s .6s var(--ease) forwards;}
+.hero-scroll{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0;animation:hIn .8s .95s var(--ease) forwards;}
+.hero-scroll span{font-family:var(--font-mono);font-size:.58rem;color:var(--muted);letter-spacing:.14em;text-transform:uppercase;}
+.scroll-bar{width:1px;height:40px;background:linear-gradient(var(--muted),transparent);animation:sbar 2s ease-in-out infinite;}
+@keyframes sbar{0%,100%{opacity:.5;transform:scaleY(1)}50%{opacity:1;transform:scaleY(.5)}}
+@keyframes hIn{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+
+/* ABOUT */
+.about-grid{display:grid;grid-template-columns:1.25fr 1fr;gap:80px;align-items:start;}
+.about-body{font-size:1rem;font-weight:300;color:var(--muted);line-height:1.9;}
+.about-body p+p{margin-top:16px;}
+.about-body b{color:var(--text);font-weight:400;}
+.cv-link{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:.7rem;color:var(--text);text-decoration:none;letter-spacing:.06em;margin-top:28px;padding-bottom:2px;border-bottom:1px solid var(--border-hi);transition:border-color .2s,gap .25s var(--ease);}
+.cv-link:hover{border-color:var(--text);gap:14px;}
+.skill-col{display:flex;flex-direction:column;}
+.sg{padding:16px 0;border-top:1px solid var(--border);}
+.sg:last-child{border-bottom:1px solid var(--border);}
+.sg-name{font-family:var(--font-mono);font-size:.6rem;color:var(--muted2);letter-spacing:.14em;text-transform:uppercase;margin-bottom:10px;}
+.stags{display:flex;flex-wrap:wrap;gap:5px;}
+.stag{font-family:var(--font-mono);font-size:.66rem;padding:3px 9px;border:1px solid var(--border);border-radius:4px;color:var(--muted);transition:border-color .2s,color .2s;}
+.stag:hover{border-color:var(--border-hi);color:var(--text);}
+
+/* EXPERTISE */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:56px;}
+.stat-c{background:var(--surface);padding:30px 26px;transition:background .2s;}
+.stat-c:hover{background:var(--surface2);}
+.stat-n{font-size:2.6rem;font-weight:200;letter-spacing:-.04em;line-height:1;color:var(--text);display:block;}
+.stat-l{font-family:var(--font-mono);font-size:.6rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-top:6px;display:block;}
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
+.svc-row2{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--border);border-left:1px solid var(--border);border-right:1px solid var(--border);border-bottom:1px solid var(--border);border-bottom-left-radius:var(--radius);border-bottom-right-radius:var(--radius);overflow:hidden;margin-top:1px;}
+.svc-card{background:var(--surface);padding:30px 26px;transition:background .3s;position:relative;overflow:hidden;}
+.svc-card::after{content:'';position:absolute;inset:0;background:var(--accent-dim);transform:translateY(100%);transition:transform .4s var(--ease);}
+.svc-card:hover{background:var(--surface2);}
+.svc-card:hover::after{transform:translateY(0);}
+.svc-icon{font-size:1.2rem;margin-bottom:14px;display:block;position:relative;z-index:1;}
+.svc-title{font-size:.92rem;font-weight:400;margin-bottom:7px;letter-spacing:-.01em;position:relative;z-index:1;color:var(--text);}
+.svc-desc{font-size:.8rem;font-weight:300;color:var(--muted);line-height:1.7;position:relative;z-index:1;}
+
+/* PROJECTS */
+.proj-filter{display:flex;border:1px solid var(--border);border-radius:8px;overflow:hidden;width:fit-content;margin-bottom:36px;}
+.pf{font-family:var(--font-mono);font-size:.63rem;padding:9px 18px;background:none;border:none;border-right:1px solid var(--border);color:var(--muted);cursor:none;letter-spacing:.08em;transition:all .2s;}
+.pf:last-child{border-right:none;}
+.pf.on,.pf:hover{background:var(--surface2);color:var(--text);}
+.legend{display:flex;gap:14px;margin-bottom:28px;flex-wrap:wrap;}
+.li{display:flex;align-items:center;gap:7px;font-family:var(--font-mono);font-size:.6rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;}
+.ld{width:5px;height:5px;border-radius:50%;}
+.ld.pr{background:#e8e8e8;}
+.ld.pe{background:#888;}
+.ld.si{background:#555;}
+.ld.ac{background:#818cf8;}
+.proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
+.pc{background:var(--surface);padding:26px;display:flex;flex-direction:column;gap:11px;transition:background .3s;transform-style:preserve-3d;}
+.pc:hover{background:var(--surface2);}
+.pc-top{display:flex;justify-content:space-between;align-items:flex-start;}
+.pc-bdg{font-family:var(--font-mono);font-size:.56rem;padding:2px 7px;border-radius:4px;letter-spacing:.08em;text-transform:uppercase;}
+.pc-bdg.pr{background:rgba(232,232,232,.1);color:rgba(232,232,232,.65);}
+.pc-bdg.pe{background:rgba(180,180,180,.09);color:#aaa;}
+.pc-bdg.si{background:rgba(120,120,120,.1);color:#888;}
+.pc-bdg.ac{background:rgba(99,102,241,.15);color:#a5b4fc;}
+.pc-arr{font-size:.78rem;color:var(--muted);text-decoration:none;display:inline-block;transition:color .2s,transform .25s var(--ease);}
+.pc:hover .pc-arr{color:var(--text);transform:translate(2px,-2px);}
+.pc-title{font-size:.95rem;font-weight:400;letter-spacing:-.02em;line-height:1.3;color:var(--text);}
+.pc-desc{font-size:.81rem;font-weight:300;color:var(--muted);line-height:1.65;flex:1;}
+.pc-impact{font-family:var(--font-mono);font-size:.66rem;color:var(--green);padding-top:9px;border-top:1px solid var(--border);}
+.pc-impact:empty{display:none;}
+.pc-tags{display:flex;flex-wrap:wrap;gap:4px;}
+.pc-tag{font-family:var(--font-mono);font-size:.58rem;padding:2px 7px;border-radius:3px;border:1px solid var(--border);color:var(--muted);}
+
+/* ACADEMIC */
+.thesis{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:40px;margin-top:44px;display:grid;grid-template-columns:1.6fr 1fr;gap:48px;position:relative;overflow:hidden;}
+.thesis::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent);}
+.thesis-bdg{font-family:var(--font-mono);font-size:.58rem;padding:3px 9px;border:1px solid var(--border);color:var(--muted);letter-spacing:.1em;text-transform:uppercase;border-radius:4px;display:inline-block;margin-bottom:14px;}
+.thesis-title{font-size:1.3rem;font-weight:300;letter-spacing:-.03em;line-height:1.3;margin-bottom:12px;color:var(--text);}
+.thesis-desc{font-size:.87rem;font-weight:300;color:var(--muted);line-height:1.8;}
+.thesis-chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:16px;}
+.tc{font-family:var(--font-mono);font-size:.6rem;padding:3px 9px;border-radius:4px;border:1px solid var(--border);color:var(--muted);}
+.tm{display:flex;flex-direction:column;gap:20px;justify-content:center;}
+.tm-item label{font-family:var(--font-mono);font-size:.56rem;color:var(--muted2);letter-spacing:.14em;text-transform:uppercase;display:block;margin-bottom:3px;}
+.tm-item p{font-size:.84rem;font-weight:300;color:var(--muted);}
+
+/* HOBBIES BENTO */
+.bento{display:grid;grid-template-columns:repeat(6,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
+.bc{background:var(--surface);padding:24px;transition:background .3s;position:relative;}
+.bc:hover{background:var(--surface2);}
+.bc-travel  {grid-column:span 4;grid-row:span 2;}
+.bc-sport   {grid-column:span 2;grid-row:span 2;}
+.bc-photo   {grid-column:span 2;}
+.bc-football{grid-column:span 2;}
+.bc-gaming  {grid-column:span 2;}
+.bc-reading {grid-column:span 2;}
+.bc-music   {grid-column:span 2;}
+.bc-cooking {grid-column:span 2;}
+.bc-lbl{font-family:var(--font-mono);font-size:.56rem;color:var(--muted2);letter-spacing:.16em;text-transform:uppercase;margin-bottom:9px;display:block;}
+.bc-h{font-size:.98rem;font-weight:400;margin-bottom:8px;letter-spacing:-.02em;color:var(--text);}
+.bc-h-sm{font-size:.86rem;font-weight:400;margin-bottom:6px;letter-spacing:-.01em;color:var(--text);}
+.bc-p{font-size:.83rem;font-weight:300;color:var(--muted);line-height:1.7;}
+.bc-p-sm{font-size:.78rem;font-weight:300;color:var(--muted);line-height:1.65;}
+.t-nums{display:flex;gap:22px;margin-top:18px;}
+.tn-n{font-size:2rem;font-weight:200;letter-spacing:-.04em;color:var(--text);display:block;line-height:1;}
+.tn-l{font-family:var(--font-mono);font-size:.56rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;}
+.strava-list{display:flex;flex-direction:column;gap:6px;margin-top:12px;}
+.strava-item{display:flex;align-items:center;justify-content:space-between;padding:7px 10px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:6px;text-decoration:none;transition:border-color .2s,background .2s;}
+.strava-item:hover{border-color:var(--orange);background:rgba(249,115,22,.06);}
+.strava-left{display:flex;align-items:center;gap:8px;}
+.strava-icon{font-size:.85rem;}
+.strava-name{font-family:var(--font-mono);font-size:.62rem;color:var(--muted);letter-spacing:.04em;transition:color .2s;}
+.strava-item:hover .strava-name{color:var(--orange);}
+.strava-arr{font-size:.7rem;color:var(--muted2);transition:color .2s,transform .2s var(--ease);}
+.strava-item:hover .strava-arr{color:var(--orange);transform:translate(2px,-2px);}
+.photo-row{display:flex;gap:4px;margin-top:10px;}
+.ps{flex:1;height:40px;background:var(--surface2);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:.85rem;}
+.photo-link{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-mono);font-size:.58rem;color:var(--muted);text-decoration:none;margin-top:9px;letter-spacing:.08em;transition:color .2s,gap .25s var(--ease);}
+.photo-link:hover{color:var(--text);gap:10px;}
+.hobby-icon{font-size:1.6rem;margin-bottom:8px;display:block;}
+
+/* VOLUNTEERING */
+.vol-list{display:flex;flex-direction:column;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
+.vc{display:grid;grid-template-columns:50px 1fr auto;gap:22px;align-items:start;background:var(--surface);padding:22px 26px;transition:background .3s,transform .35s var(--ease);}
+.vc:hover{background:var(--surface2);transform:translateX(5px);}
+.v-icon{width:42px;height:42px;background:var(--surface2);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;border:1px solid var(--border);transition:border-color .2s;}
+.vc:hover .v-icon{border-color:var(--border-hi);}
+.v-org{font-size:.92rem;font-weight:400;margin-bottom:3px;color:var(--text);}
+.v-role{font-family:var(--font-mono);font-size:.62rem;color:var(--muted);margin-bottom:8px;}
+.v-desc{font-size:.82rem;font-weight:300;color:var(--muted);line-height:1.7;}
+.v-chips{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px;}
+.vch{font-family:var(--font-mono);font-size:.58rem;padding:2px 8px;border:1px solid var(--border);color:var(--muted);border-radius:4px;transition:border-color .2s;}
+.vc:hover .vch{border-color:var(--border-hi);}
+.v-period{font-family:var(--font-mono);font-size:.6rem;color:var(--muted);white-space:nowrap;text-align:right;}
+
+/* CONTACT */
+#contact{background:var(--surface);}
+.con-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;}
+.con-quote{font-size:1.1rem;font-weight:200;letter-spacing:-.03em;line-height:1.65;color:var(--muted);margin-bottom:36px;font-style:italic;}
+.con-quote b{color:var(--text);font-weight:300;font-style:normal;}
+.con-links{display:flex;flex-direction:column;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
+.con-link{display:flex;align-items:center;gap:14px;padding:15px 18px;text-decoration:none;color:var(--muted);border-bottom:1px solid var(--border);transition:all .2s;}
+.con-link:last-child{border-bottom:none;}
+.con-link:hover{background:var(--surface2);color:var(--text);padding-left:24px;}
+.cl-ico{width:30px;height:30px;background:var(--surface2);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:.66rem;font-weight:500;flex-shrink:0;border:1px solid var(--border);color:var(--muted);}
+.cl-txt{font-size:.83rem;font-weight:300;}
+.con-form{display:flex;flex-direction:column;gap:13px;}
+.ff{display:flex;flex-direction:column;gap:6px;}
+.ff label{font-family:var(--font-mono);font-size:.58rem;color:var(--muted);letter-spacing:.14em;text-transform:uppercase;}
+.ff input,.ff textarea{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:11px 13px;color:var(--text);font-family:var(--font-sans);font-size:.86rem;font-weight:300;outline:none;resize:vertical;transition:border-color .2s;}
+.ff input:focus,.ff textarea:focus{border-color:var(--border-hi);}
+.ff input::placeholder,.ff textarea::placeholder{color:var(--muted2);}
+.ff textarea{min-height:96px;}
+/* Contact form states */
+.form-status{font-family:var(--font-mono);font-size:.7rem;padding:12px 16px;border-radius:8px;display:none;text-align:center;}
+.form-status.success{display:block;background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.2);color:var(--green);}
+.form-status.error{display:block;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);color:#f87171;}
+.btn-loading{opacity:.6;pointer-events:none;}
+
+/* FOOTER */
+footer{border-top:1px solid var(--border);padding:26px 48px;display:flex;align-items:center;justify-content:space-between;}
+footer p{font-family:var(--font-mono);font-size:.6rem;color:var(--muted2);}
+footer a{color:var(--muted);text-decoration:none;transition:color .2s;}
+footer a:hover{color:var(--text);}
+
+/* RESPONSIVE */
+@media(max-width:960px){
+  :root{--gap:96px;}
+  nav{padding:0 20px;} .nav-links{display:none;}
+  .wrap{padding:0 20px;}
+  .about-grid,.con-grid{grid-template-columns:1fr;gap:44px;}
+  .stats-row{grid-template-columns:repeat(2,1fr);}
+  .svc-grid,.svc-row2{grid-template-columns:1fr;}
+  .svc-row2{border-left:none;border-right:none;margin-top:0;}
+  .proj-grid{grid-template-columns:1fr;}
+  .thesis{grid-template-columns:1fr;gap:28px;}
+  .bento{grid-template-columns:1fr 1fr;}
+  .bc-travel,.bc-sport{grid-column:span 2;grid-row:span 1;}
+  .bc-photo,.bc-football,.bc-gaming,.bc-reading,.bc-music,.bc-cooking{grid-column:span 1;}
+  .vc{grid-template-columns:1fr;gap:10px;}
+  footer{flex-direction:column;gap:8px;text-align:center;}
+}
+@media(max-width:520px){
+  .bento{grid-template-columns:1fr;}
+  .bc-travel,.bc-sport,.bc-photo,.bc-football,.bc-gaming,.bc-reading,.bc-music,.bc-cooking{grid-column:span 1;}
+  .hero-name{font-size:clamp(2.8rem,13vw,5rem);}
+}
+</style>
+</head>
+<body>
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">PSS.</a>
+  <ul class="nav-links">
+    <li><a href="#about"        data-t="nav.about">About</a></li>
+    <li><a href="#expertise"    data-t="nav.exp">Expertise</a></li>
+    <li><a href="#projects"     data-t="nav.proj">Projects</a></li>
+    <li><a href="#academic"     data-t="nav.ac">Academic</a></li>
+    <li><a href="#hobbies"      data-t="nav.hob">Hobbies</a></li>
+    <li><a href="#volunteering" data-t="nav.vol">Volunteering</a></li>
+    <li><a href="#contact"      data-t="nav.con">Contact</a></li>
+    <li><a href="photography.html" class="nav-photo-link" data-t="nav.photo">Photography ↗</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="nav-status"><span class="ndot"></span><span data-t="nav.status">Open to work</span></div>
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
+      <button class="lang-btn"        id="btn-fr" onclick="setLang('fr')">FR</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-grid-bg"></div>
+  <div class="wrap hero-inner">
+    <p class="hero-eyebrow" data-t="h.eyebrow">Paris, France · Data · Marketing · AI</p>
+    <h1 class="hero-name" data-t="h.name">Ponn Siva Shankar<br><b>Sekar</b></h1>
+    <div class="hero-roles">
+      <span class="rp" data-t="r1">Data Analyst</span>
+      <span class="rp" data-t="r2">Marketing Strategist</span>
+      <span class="rp" data-t="r3">Business Developer</span>
+      <span class="rp" data-t="r4">AI &amp; Operations</span>
+    </div>
+    <p class="hero-tagline" data-t="h.tag">I turn data into decisions — blending analytical rigour with marketing strategy, AI tools, and business development to drive measurable growth.</p>
+    <div class="hero-ctas">
+      <div class="magnetic"><a href="#projects" class="btn btn-p"><span data-scramble data-t="h.cta1">See My Work</span><span>→</span></a></div>
+      <div class="magnetic"><a href="#contact"  class="btn btn-g"><span data-scramble data-t="h.cta2">Get in Touch</span></a></div>
+    </div>
+  </div>
+  <div class="hero-scroll"><span data-t="h.scroll">Scroll</span><div class="scroll-bar"></div></div>
+</section>
+
+<!-- ABOUT -->
+<section id="about"><div class="wrap">
+  <p class="s-label" data-r data-t="sl.about">About</p>
+  <div class="about-grid">
+    <div data-r>
+      <div class="about-body">
+        <p data-t="a.p1">I'm <b>Ponn Siva Shankar Sekar</b>, a Paris-based analyst and strategist at the intersection of data, marketing, and AI. I help organisations make sharper decisions and grow with intention.</p>
+        <p data-t="a.p2">My work spans <b>market analysis</b>, <b>AI consulting</b>, and <b>go-to-market strategy</b> — translating complex datasets into insights that actually change decisions.</p>
+        <p data-t="a.p3">I'm completing a <b>Master's in AI &amp; Marketing Strategies</b> and writing my thesis on the ethical limits of AI in hyper-personalised marketing.</p>
+      </div>
+      <a href="documents\Ponn Siva Shankar SEKAR  P&G.pdf" class="cv-link magnetic" data-scramble data-t="a.cv">Download CV →</a>
+    </div>
+    <div class="skill-col" data-r="left">
+      <div class="sg"><p class="sg-name" data-t="sg.d">Data &amp; Analytics</p><div class="stags"><span class="stag">SQL</span><span class="stag">Python</span><span class="stag">Jupyter Notebook</span><span class="stag">Power BI</span><span class="stag">Tableau</span><span class="stag">Dataiku</span></div></div>
+      <div class="sg"><p class="sg-name" data-t="sg.m">Marketing</p><div class="stags"><span class="stag">SEO/SEA</span><span class="stag">CRM</span><span class="stag">Digital Marketing</span><span class="stag">A/B Testing</span><span class="stag">Content Strategy</span></div></div>
+      <div class="sg"><p class="sg-name" data-t="sg.b">Business Dev</p><div class="stags"><span class="stag">Market Research</span><span class="stag">GTM</span><span class="stag">Competitive Analysis</span><span class="stag">KPI Design</span></div></div>
+      <div class="sg"><p class="sg-name" data-t="sg.a">AI &amp; Ops</p><div class="stags"><span class="stag">ML &amp; AI</span><span class="stag">Customer Segmentation</span><span class="stag">Prompt Eng.</span><span class="stag">Automation</span><span class="stag">Feature Eng.</span></div></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- EXPERTISE -->
+<section id="expertise"><div class="wrap">
+  <p class="s-label" data-r data-t="sl.exp">Expertise</p>
+  <h2 class="s-title" data-r data-t="e.title">What I bring <b>to the table</b></h2>
+  <p class="s-deck" style="margin-bottom:52px" data-r data-t="e.deck">Five domains where I deliver tangible impact for teams, products, and organisations.</p>
+  <div class="stats-row" data-sg>
+    <div class="stat-c"><span class="stat-n">3+</span><span class="stat-l" data-t="sn.e">Years exp.</span></div>
+    <div class="stat-c"><span class="stat-n">12+</span><span class="stat-l" data-t="sn.p">Projects</span></div>
+    <div class="stat-c"><span class="stat-n">3+</span><span class="stat-l" data-t="sn.i">Industries</span></div>
+    <div class="stat-c"><span class="stat-n">3</span><span class="stat-l" data-t="sn.l">Languages</span></div>
+  </div>
+  <div class="svc-grid" data-sg>
+    <div class="svc-card"><span class="svc-icon">📊</span><p class="svc-title" data-t="s1.t">Data Analysis &amp; Reporting</p><p class="svc-desc" data-t="s1.d">Raw datasets → dashboards, KPI reports, and business insights. SQL, Python, Power BI, Tableau, Dataiku.</p></div>
+    <div class="svc-card"><span class="svc-icon">📣</span><p class="svc-title" data-t="s2.t">Marketing Strategy</p><p class="svc-desc" data-t="s2.d">Data-driven campaigns, segmentation, and channel optimisation. From positioning to conversion goals.</p></div>
+    <div class="svc-card"><span class="svc-icon">🤝</span><p class="svc-title" data-t="s3.t">Business Development</p><p class="svc-desc" data-t="s3.d">Growth opportunities, partnerships, and GTM strategies aligned with real market dynamics.</p></div>
+  </div>
+  <div class="svc-row2" data-sg>
+    <div class="svc-card"><span class="svc-icon">🧠</span><p class="svc-title" data-t="s4.t">AI in Business</p><p class="svc-desc" data-t="s4.d">NLP, ML pipelines, customer segmentation, and prompt engineering applied to marketing and operations.</p></div>
+    <div class="svc-card"><span class="svc-icon">⚙️</span><p class="svc-title" data-t="s5.t">Business Operations</p><p class="svc-desc" data-t="s5.d">Streamlining workflows, designing frameworks, and implementing tools for cross-team efficiency.</p></div>
+  </div>
+</div></section>
+
+<!-- PROJECTS -->
+<section id="projects"><div class="wrap">
+  <p class="s-label" data-r data-t="sl.proj">Projects</p>
+  <h2 class="s-title" data-r data-t="p.title">Selected <b>case studies</b></h2>
+  <p class="s-deck" style="margin-bottom:28px" data-r data-t="p.deck">Professional, academic, and personal work — each built to solve a real problem.</p>
+  <div class="legend" data-r>
+    <div class="li"><div class="ld pr"></div><span data-t="leg.pr">Professional</span></div>
+    <div class="li"><div class="ld pe"></div><span data-t="leg.pe">Personal</span></div>
+    <div class="li"><div class="ld si"></div><span data-t="leg.si">Side</span></div>
+    <div class="li"><div class="ld ac"></div><span data-t="leg.ac">Academic</span></div>
+  </div>
+  <div class="proj-filter" data-r>
+    <button class="pf on" data-f="all"  data-t="pf.all">All</button>
+    <button class="pf" data-f="pr"      data-t="pf.pr">Professional</button>
+    <button class="pf" data-f="pe"      data-t="pf.pe">Personal</button>
+    <button class="pf" data-f="si"      data-t="pf.si">Side</button>
+    <button class="pf" data-f="ac"      data-t="pf.ac">Academic</button>
+  </div>
+  <div class="proj-grid" data-sg>
+    <div class="pc" data-cat="ac">
+      <div class="pc-top"><span class="pc-bdg ac" data-t="bdg.ac">Academic</span><a href="#" class="pc-arr">↗</a></div>
+      <h3 class="pc-title" data-t="p1.t">Anomaly Detection in GI Tract</h3>
+      <p class="pc-desc" data-t="p1.d">Computer Vision project to detect 7 types of anomalies in GI tract images using deep learning techniques — CNNs, transfer learning, and augmentation pipelines.</p>
+      <p class="pc-impact" data-t="p1.i">↑ 18% faster inference vs baseline model</p>
+      <div class="pc-tags"><span class="pc-tag">Python</span><span class="pc-tag">Computer Vision</span><span class="pc-tag">Deep Learning</span><span class="pc-tag">CNN</span></div>
+    </div>
+    <div class="pc" data-cat="ac">
+      <div class="pc-top"><span class="pc-bdg ac" data-t="bdg.ac">Academic</span><a href="#" class="pc-arr">↗</a></div>
+      <h3 class="pc-title" data-t="p2.t">Commercial Performance &amp; KPI Dashboards</h3>
+      <p class="pc-desc" data-t="p2.d">Cleaned and structured raw commercial data, then built interactive dashboards for a sales team to track performance against strategic KPIs in real time.</p>
+      <p class="pc-impact" data-t="p2.i">→ Full pipeline from raw data to live dashboard</p>
+      <div class="pc-tags"><span class="pc-tag">Power BI</span><span class="pc-tag">Data Cleaning</span><span class="pc-tag">KPI Design</span></div>
+    </div>
+    <div class="pc" data-cat="ac">
+      <div class="pc-top"><span class="pc-bdg ac" data-t="bdg.ac">Academic</span><a href="#" class="pc-arr">↗</a></div>
+      <h3 class="pc-title" data-t="p3.t">Digital Transformation Strategy — Nike</h3>
+      <p class="pc-desc" data-t="p3.d">Case study on introducing Technology 4.0 and sustainable practices into Nike's retail operations — digital twin, smart logistics, and customer experience redesign.</p>
+      <p class="pc-impact" data-t="p3.i">→ 10-page strategic report</p>
+      <div class="pc-tags"><span class="pc-tag">Business Strategy</span><span class="pc-tag">Tech 4.0</span><span class="pc-tag">Sustainability</span></div>
+    </div>
+    <div class="pc" data-cat="ac">
+      <div class="pc-top"><span class="pc-bdg ac" data-t="bdg.ac">Academic</span><a href="#" class="pc-arr">↗</a></div>
+      <h3 class="pc-title" data-t="p4.t">Product &amp; Customer Performance Analytics</h3>
+      <p class="pc-desc" data-t="p4.d">Built a Python pipeline to cluster customers and products by performance metrics — identifying high-value segments and underperforming SKUs for strategic reallocation.</p>
+      <p class="pc-impact" data-t="p4.i">→ Actionable segmentation model</p>
+      <div class="pc-tags"><span class="pc-tag">Python</span><span class="pc-tag">K-Means</span><span class="pc-tag">Jupyter Notebook</span></div>
+    </div>
+    <div class="pc" data-cat="ac">
+      <div class="pc-top"><span class="pc-bdg ac" data-t="bdg.ac">Academic</span><a href="#" class="pc-arr">↗</a></div>
+      <h3 class="pc-title" data-t="p5.t">Digital Analytics &amp; User Journey Analysis</h3>
+      <p class="pc-desc" data-t="p5.d">Analysed user journeys and digital performance metrics to inform product and marketing decisions — using Google Analytics and behavioural frameworks.</p>
+      <p class="pc-impact" data-t="p5.i">→ Presentation delivered to improve website reach</p>
+      <div class="pc-tags"><span class="pc-tag">Google Analytics</span><span class="pc-tag">Hotjar</span><span class="pc-tag">Mixpanel</span></div>
+    </div>
+    <div class="pc" data-cat="ac">
+      <div class="pc-top"><span class="pc-bdg ac" data-t="bdg.ac">Academic</span><a href="#" class="pc-arr">↗</a></div>
+      <h3 class="pc-title" data-t="p6.t">Sentiment Analysis</h3>
+      <p class="pc-desc" data-t="p6.d">Performed data cleaning, preprocessing, and text normalisation using Python to prepare raw textual data for NLP modelling.</p>
+      <p class="pc-impact" data-t="p6.i">→ Comparative study across NLP models</p>
+      <div class="pc-tags"><span class="pc-tag">Python</span><span class="pc-tag">NLP</span><span class="pc-tag">Data Cleaning</span></div>
+    </div>
+    <div class="pc" data-cat="pr">
+      <div class="pc-top"><span class="pc-bdg pr" data-t="bdg.pr">Pro</span><a href="#" class="pc-arr">↗</a></div>
+      <h3 class="pc-title" data-t="p7.t">Workflow Automation</h3>
+      <p class="pc-desc" data-t="p7.d">Automated repetitive manual tasks to ensure cloud readiness following deployment — SOAP API integrations, Jenkins pipelines, and scheduled job management.</p>
+      <p class="pc-impact" data-t="p7.i">↑ 15% productivity gain post-deployment</p>
+      <div class="pc-tags"><span class="pc-tag">SOAP API</span><span class="pc-tag">Jenkins</span><span class="pc-tag">JavaScript</span></div>
+    </div>
+    <div class="pc" data-cat="pr">
+      <div class="pc-top"><span class="pc-bdg pr" data-t="bdg.pr">Pro</span><a href="#" class="pc-arr">↗</a></div>
+      <h3 class="pc-title" data-t="p8.t">Market Analysis &amp; Opportunity Identification</h3>
+      <p class="pc-desc" data-t="p8.d">Studied market trends and identified business opportunities for a sport-tech startup — SWOT, Porter's Five Forces, and demand-side analysis.</p>
+      <p class="pc-impact" data-t="p8.i">→ SWOT + Porter's framework delivered</p>
+      <div class="pc-tags"><span class="pc-tag">Market Research</span><span class="pc-tag">Business Strategy</span><span class="pc-tag">Data Analysis</span></div>
+    </div>
+    <div class="pc" data-cat="pe">
+      <div class="pc-top"><span class="pc-bdg pe" data-t="bdg.pe">Personal</span><a href="#" class="pc-arr">↗</a></div>
+      <h3 class="pc-title" data-t="p9.t">Chatbot using Botpress</h3>
+      <p class="pc-desc" data-t="p9.d">Built a conversational AI chatbot using Botpress and Python to simulate human-like interactions and provide automated customer support for an online food delivery service.</p>
+      <p class="pc-impact" data-t="p9.i">→ Explored Botpress limitations in complex queries</p>
+      <div class="pc-tags"><span class="pc-tag">Python</span><span class="pc-tag">NLP</span><span class="pc-tag">Botpress</span></div>
+    </div>
+    <div class="pc" data-cat="pe">
+      <div class="pc-top"><span class="pc-bdg pe" data-t="bdg.pe">Personal</span><a href="#" class="pc-arr">↗</a></div>
+      <h3 class="pc-title" data-t="p10.t">Website Analysis for SEO</h3>
+      <p class="pc-desc" data-t="p10.d">Analysed website performance and SEO metrics using Google Search Console and SEMrush to identify opportunities for improving search visibility and user engagement.</p>
+      <p class="pc-impact" data-t="p10.i">→ Meta tags, content structure &amp; linking improvements</p>
+      <div class="pc-tags"><span class="pc-tag">SEO</span><span class="pc-tag">Google Search Console</span><span class="pc-tag">SEMrush</span></div>
+    </div>
+    <div class="pc" data-cat="si">
+      <div class="pc-top"><span class="pc-bdg si" data-t="bdg.si">Side</span><a href="#" class="pc-arr">↗</a></div>
+      <h3 class="pc-title" data-t="p11.t">Medical Data Visualisation</h3>
+      <p class="pc-desc" data-t="p11.d">Created interactive visualisations of medical datasets to improve clinician understanding and support decision-making — exploratory analysis and clean reporting.</p>
+      <p class="pc-impact" data-t="p11.i">→ Improved data interpretation for developers &amp; clinicians</p>
+      <div class="pc-tags"><span class="pc-tag">Power BI</span><span class="pc-tag">Python</span><span class="pc-tag">EDA</span></div>
+    </div>
+    <div class="pc" data-cat="si">
+      <div class="pc-top"><span class="pc-bdg si" data-t="bdg.si">Side</span><a href="#" class="pc-arr">↗</a></div>
+      <h3 class="pc-title" data-t="p12.t">Portfolio Website</h3>
+      <p class="pc-desc" data-t="p12.d">Designed and built this dark-minimal portfolio — custom cursor, scroll animations, magnetic buttons, letter scramble, and a photography gallery page.</p>
+      <p class="pc-impact" data-t="p12.i">→ Live at shankarnevermore.github.io</p>
+      <div class="pc-tags"><span class="pc-tag">HTML</span><span class="pc-tag">CSS</span><span class="pc-tag">JavaScript</span></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- ACADEMIC -->
+<section id="academic"><div class="wrap">
+  <p class="s-label" data-r data-t="sl.ac">Academic</p>
+  <h2 class="s-title" data-r data-t="ac.title">Master's <b>thesis</b></h2>
+  <p class="s-deck" data-r data-t="ac.deck">Current research at the intersection of AI, ethics, and marketing strategy.</p>
+  <div class="thesis" data-r="scale">
+    <div>
+      <span class="thesis-bdg" data-t="th.bdg">Thesis · In Progress · 2025–Present</span>
+      <h3 class="thesis-title" data-t="th.title">Ethical Limits of AI in Hyper-Personalised Marketing</h3>
+      <p class="thesis-desc" data-t="th.desc">This thesis examines where AI-driven personalisation crosses ethical boundaries — exploring consent, algorithmic manipulation, data sovereignty, and regulatory frameworks (GDPR, AI Act). It proposes a practical ethics framework for marketers deploying AI at scale.</p>
+      <div class="thesis-chips">
+        <span class="tc">AI Ethics</span><span class="tc">Hyper-Personalisation</span>
+        <span class="tc">GDPR</span><span class="tc">Behavioural Data</span><span class="tc">Marketing Strategy</span>
+      </div>
+    </div>
+    <div class="tm">
+      <div class="tm-item"><label data-t="tm.u">University</label><p>EM Normandie</p></div>
+      <div class="tm-item"><label data-t="tm.s">Supervisor</label><p data-t="tm.sv">Prof. Name</p></div>
+      <div class="tm-item"><label data-t="tm.p">Programme</label><p data-t="tm.pn">MSc AI &amp; Marketing Strategies</p></div>
+      <div class="tm-item"><label data-t="tm.st">Status</label><p data-t="tm.stv">In Progress — 2026</p></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- HOBBIES -->
+<section id="hobbies"><div class="wrap">
+  <p class="s-label" data-r data-t="sl.hob">Hobbies</p>
+  <h2 class="s-title" data-r data-t="hb.title">Beyond the <b>spreadsheet</b></h2>
+  <div class="bento" style="margin-top:44px" data-sg>
+    <div class="bc bc-travel">
+      <span class="bc-lbl" data-t="bc.t.l">01 — Travel</span>
+      <h3 class="bc-h" data-t="bc.t.h">Travelling the World</h3>
+      <p class="bc-p" data-t="bc.t.p">Exploring new markets, cultures, languages and ways of thinking. Every destination teaches me something that ends up in my work — a business model spotted abroad, a perspective shift that changes how I read a market.</p>
+      <div class="t-nums">
+        <div><span class="tn-n">5</span><span class="tn-l" data-t="bc.t.c">Countries</span></div>
+        <div><span class="tn-n">2</span><span class="tn-l" data-t="bc.t.ct">Continents</span></div>
+        <div><span class="tn-n">∞</span><span class="tn-l" data-t="bc.t.m">Memories</span></div>
+      </div>
+    </div>
+    <div class="bc bc-sport">
+      <span class="bc-lbl" data-t="bc.sp.l">02 — Sport</span>
+      <h3 class="bc-h-sm" data-t="bc.sp.h">Active on Strava</h3>
+      <p class="bc-p-sm" style="margin-bottom:12px" data-t="bc.sp.p">Cycling, running, hiking, swimming. Tracked and pushed on Strava — numbers don't lie.</p>
+      <div class="strava-list">
+        <a href="https://www.strava.com/athletes/81697850" target="_blank" class="strava-item">
+          <div class="strava-left"><span class="strava-icon">🚴</span><span class="strava-name" data-t="str.cy">Cycling</span></div><span class="strava-arr">↗</span>
+        </a>
+        <a href="https://www.strava.com/athletes/81697850" target="_blank" class="strava-item">
+          <div class="strava-left"><span class="strava-icon">🏃</span><span class="strava-name" data-t="str.ru">Running</span></div><span class="strava-arr">↗</span>
+        </a>
+        <a href="https://www.strava.com/athletes/81697850" target="_blank" class="strava-item">
+          <div class="strava-left"><span class="strava-icon">🥾</span><span class="strava-name" data-t="str.hi">Hiking</span></div><span class="strava-arr">↗</span>
+        </a>
+        <a href="https://www.strava.com/athletes/81697850" target="_blank" class="strava-item">
+          <div class="strava-left"><span class="strava-icon">🏊</span><span class="strava-name" data-t="str.sw">Swimming</span></div><span class="strava-arr">↗</span>
+        </a>
+      </div>
+    </div>
+    <div class="bc bc-photo">
+      <span class="bc-lbl" data-t="bc.ph.l">03 — Photography</span>
+      <span class="hobby-icon">📷</span>
+      <h3 class="bc-h-sm" data-t="bc.ph.h">Photography</h3>
+      <p class="bc-p-sm" data-t="bc.ph.p">Street, nightlife, nature and travel photography, 35mm &amp; digital.</p>
+      <a href="photography.html" class="photo-link" data-t="bc.ph.a">View portfolio →</a>
+    </div>
+    <div class="bc bc-football">
+      <span class="bc-lbl" data-t="bc.fb.l">04 — Football</span>
+      <span class="hobby-icon">⚽</span>
+      <h3 class="bc-h-sm" data-t="bc.fb.h">Football</h3>
+      <p class="bc-p-sm" data-t="bc.fb.p">Playing and watching. xG, pressing metrics, and tactical analysis — feeds right into how I think about performance at work.</p>
+    </div>
+    <div class="bc bc-gaming">
+      <span class="bc-lbl" data-t="bc.gm.l">05 — Gaming</span>
+      <span class="hobby-icon">🎮</span>
+      <h3 class="bc-h-sm" data-t="bc.gm.h">Video Games</h3>
+      <p class="bc-p-sm" data-t="bc.gm.p">Strategy, open world, and narrative-driven games. Systems thinking and resource optimisation transfer surprisingly well to business problems.</p>
+    </div>
+    <div class="bc bc-reading">
+      <span class="bc-lbl" data-t="bc.pu.l">06 — Puzzles</span>
+      <h3 class="bc-h-sm" data-t="bc.pu.h">Puzzles &amp; Brain Teasers</h3>
+      <p class="bc-p-sm" data-t="bc.pu.p">Solving puzzles and brain teasers — sharpens pattern recognition and lateral thinking.</p>
+    </div>
+    <div class="bc bc-music">
+      <span class="bc-lbl" data-t="bc.mu.l">07 — Music</span>
+      <h3 class="bc-h-sm" data-t="bc.mu.h">Music</h3>
+      <p class="bc-p-sm" data-t="bc.mu.p">A playlist for every context. Music manages energy across long work sessions and late-night coding.</p>
+    </div>
+    <div class="bc bc-cooking">
+      <span class="bc-lbl" data-t="bc.co.l">08 — Cooking</span>
+      <h3 class="bc-h-sm" data-t="bc.co.h">Cooking</h3>
+      <p class="bc-p-sm" data-t="bc.co.p">Every trip inspires a dish. I cook like I build strategy — clear goal, good inputs, room to improvise.</p>
+    </div>
+  </div>
+</div></section>
+
+<!-- VOLUNTEERING -->
+<section id="volunteering"><div class="wrap">
+  <p class="s-label" data-r data-t="sl.vol">Volunteering</p>
+  <h2 class="s-title" data-r data-t="v.title">Giving back &amp; <b>community</b></h2>
+  <div class="vol-list" style="margin-top:44px" data-sg>
+    <div class="vc">
+      <div class="v-icon">📣</div>
+      <div>
+        <p class="v-org" data-t="v1.o">ESN Paris</p>
+        <p class="v-role" data-t="v1.r">Communication Volunteer</p>
+        <p class="v-desc" data-t="v1.d">Managing social media and communications for a student community of 19k+ members.</p>
+        <div class="v-chips"><span class="vch" data-t="v1.c1">Community Support</span><span class="vch" data-t="v1.c2">Social Media</span><span class="vch" data-t="v1.c3">Content Creation</span></div>
+      </div>
+      <span class="v-period">2026 —<br>Present</span>
+    </div>
+    <div class="vc">
+      <div class="v-icon">🎉</div>
+      <div>
+        <p class="v-org" data-t="v2.o">COP1</p>
+        <p class="v-role" data-t="v2.r">Event Organiser</p>
+        <p class="v-desc" data-t="v2.d">Organised events to meet new people, build social connections and community networks.</p>
+        <div class="v-chips"><span class="vch" data-t="v2.c1">Social Events</span><span class="vch" data-t="v2.c2">Ice Breakers</span><span class="vch" data-t="v2.c3">Community Building</span></div>
+      </div>
+      <span class="v-period">2026 —<br>Present</span>
+    </div>
+    <div class="vc">
+      <div class="v-icon">🛒</div>
+      <div>
+        <p class="v-org" data-t="v3.o">COP1</p>
+        <p class="v-role" data-t="v3.r">Grocery Distributor</p>
+        <p class="v-desc" data-t="v3.d">Distributed groceries to local communities in need, coordinating logistics and volunteer efforts.</p>
+        <div class="v-chips"><span class="vch" data-t="v3.c1">Community Support</span><span class="vch" data-t="v3.c2">Logistics</span><span class="vch" data-t="v3.c3">Volunteer Coordination</span></div>
+      </div>
+      <span class="v-period">2026 —<br>Present</span>
+    </div>
+  </div>
+</div></section>
+
+<!-- CONTACT -->
+<section id="contact"><div class="wrap">
+  <p class="s-label" data-r data-t="sl.con">Contact</p>
+  <h2 class="s-title" data-r data-t="c.title">Let's <b>work together</b></h2>
+  <div class="con-grid" style="margin-top:52px">
+    <div data-r="left">
+      <p class="con-quote" data-t="c.quote">"The best analysis means nothing if it doesn't reach the right people in <b>the right form</b>. Let's find a way to work together."</p>
+      <div class="con-links">
+        <a href="https://www.linkedin.com/in/shankar30/" target="_blank" class="con-link"><div class="cl-ico">in</div><span class="cl-txt">linkedin.com/in/shankar30</span></a>
+        <a href="https://github.com/ShankarNevermore"    target="_blank" class="con-link"><div class="cl-ico">GH</div><span class="cl-txt">github.com/ShankarNevermore</span></a>
+        <a href="https://www.strava.com/athletes/81697850" target="_blank" class="con-link"><div class="cl-ico">STR</div><span class="cl-txt">strava.com/athletes/81697850</span></a>
+        <a href="mailto:ponnsivashankars@gmail.com" class="con-link"><div class="cl-ico">@</div><span class="cl-txt">ponnsivashankars@gmail.com</span></a>
+        <a href="photography.html" class="con-link"><div class="cl-ico">📷</div><span class="cl-txt" data-t="c.pl">Photography Portfolio →</span></a>
+      </div>
+    </div>
+    <div class="con-form" data-r id="contact-form-wrap">
+      <div class="ff"><label data-t="f.n">Name</label><input type="text" id="f-name" placeholder="Your name"/></div>
+      <div class="ff"><label data-t="f.e">Email</label><input type="email" id="f-email" placeholder="you@example.com"/></div>
+      <div class="ff"><label data-t="f.m">Message</label><textarea id="f-msg" placeholder="Tell me about your project..."></textarea></div>
+      <div id="form-status" class="form-status"></div>
+      <div class="magnetic" style="align-self:flex-start">
+        <button class="btn btn-p" id="send-btn" onclick="sendMessage()"><span data-scramble data-t="f.s">Send Message</span><span>→</span></button>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<footer>
+  <p>© 2025 <a href="#">Ponn Siva Shankar Sekar</a>. All rights reserved.</p>
+  <p style="font-size:.56rem;opacity:.5">index.html · v2.0 · <a href="photography.html">Photography ↗</a></p>
+</footer>
+
+<script>
+/* ══════════════════════════════════════════
+   FULL i18n — every text node on the page
+══════════════════════════════════════════ */
+const T = {
+en:{
+  "nav.about":"About","nav.exp":"Expertise","nav.proj":"Projects","nav.ac":"Academic",
+  "nav.hob":"Hobbies","nav.vol":"Volunteering","nav.con":"Contact","nav.photo":"Photography ↗","nav.status":"Open to work",
+  "h.eyebrow":"Paris, France · Data · Marketing · AI",
+  "h.name":"Ponn Siva Shankar<br><b>Sekar</b>",
+  "h.tag":"I turn data into decisions — blending analytical rigour with marketing strategy, AI tools, and business development to drive measurable growth.",
+  "h.cta1":"See My Work","h.cta2":"Get in Touch","h.scroll":"Scroll",
+  "r1":"Data Analyst","r2":"Marketing Strategist","r3":"Business Developer","r4":"AI & Operations",
+  "sl.about":"About","sl.exp":"Expertise","sl.proj":"Projects","sl.ac":"Academic","sl.hob":"Hobbies","sl.vol":"Volunteering","sl.con":"Contact",
+  "a.p1":"I'm <b>Ponn Siva Shankar Sekar</b>, a Paris-based analyst and strategist at the intersection of data, marketing, and AI. I help organisations make sharper decisions and grow with intention.",
+  "a.p2":"My work spans <b>market analysis</b>, <b>AI consulting</b>, and <b>go-to-market strategy</b> — translating complex datasets into insights that actually change decisions.",
+  "a.p3":"I'm completing a <b>Master's in AI &amp; Marketing Strategies</b> and writing my thesis on the ethical limits of AI in hyper-personalised marketing.",
+  "a.cv":"Download CV →",
+  "sg.d":"Data & Analytics","sg.m":"Marketing","sg.b":"Business Dev","sg.a":"AI & Ops",
+  "e.title":"What I bring <b>to the table</b>","e.deck":"Five domains where I deliver tangible impact for teams, products, and organisations.",
+  "sn.e":"Years exp.","sn.p":"Projects","sn.i":"Industries","sn.l":"Languages",
+  "s1.t":"Data Analysis & Reporting","s1.d":"Raw datasets → dashboards, KPI reports, and business insights. SQL, Python, Power BI, Tableau, Dataiku.",
+  "s2.t":"Marketing Strategy","s2.d":"Data-driven campaigns, segmentation, and channel optimisation. From positioning to conversion goals.",
+  "s3.t":"Business Development","s3.d":"Growth opportunities, partnerships, and GTM strategies aligned with real market dynamics.",
+  "s4.t":"AI in Business","s4.d":"NLP, ML pipelines, customer segmentation, and prompt engineering applied to marketing and operations.",
+  "s5.t":"Business Operations","s5.d":"Streamlining workflows, designing frameworks, and implementing tools for cross-team efficiency.",
+  "sl.proj":"Projects","p.title":"Selected <b>case studies</b>","p.deck":"Professional, academic, and personal work — each built to solve a real problem.",
+  "leg.pr":"Professional","leg.pe":"Personal","leg.si":"Side","leg.ac":"Academic",
+  "pf.all":"All","pf.pr":"Professional","pf.pe":"Personal","pf.si":"Side","pf.ac":"Academic",
+  "bdg.pr":"Pro","bdg.pe":"Personal","bdg.si":"Side","bdg.ac":"Academic",
+  "p1.t":"Anomaly Detection in GI Tract","p1.d":"Computer Vision project to detect 7 types of anomalies in GI tract images using deep learning — CNNs, transfer learning, and augmentation pipelines.","p1.i":"↑ 18% faster inference vs baseline",
+  "p2.t":"Commercial Performance & KPI Dashboards","p2.d":"Cleaned and structured raw commercial data, then built interactive dashboards for a sales team to track KPIs in real time.","p2.i":"→ Full pipeline from raw data to live dashboard",
+  "p3.t":"Digital Transformation Strategy — Nike","p3.d":"Case study on introducing Technology 4.0 and sustainable practices into Nike's retail operations.","p3.i":"→ 10-page strategic report",
+  "p4.t":"Product & Customer Performance Analytics","p4.d":"Python pipeline to cluster customers and products by performance metrics — identifying high-value segments and underperforming SKUs.","p4.i":"→ Actionable segmentation model",
+  "p5.t":"Digital Analytics & User Journey Analysis","p5.d":"Analysed user journeys and digital performance metrics to inform product and marketing decisions — Google Analytics and behavioural frameworks.","p5.i":"→ Presentation delivered to improve website reach",
+  "p6.t":"Sentiment Analysis","p6.d":"Data cleaning, preprocessing, and text normalisation using Python to prepare raw textual data for NLP modelling.","p6.i":"→ Comparative study across NLP models",
+  "p7.t":"Workflow Automation","p7.d":"Automated repetitive manual tasks for cloud readiness — SOAP API integrations, Jenkins pipelines, and scheduled job management.","p7.i":"↑ 15% productivity gain post-deployment",
+  "p8.t":"Market Analysis & Opportunity Identification","p8.d":"Studied market trends for a sport-tech startup — SWOT, Porter's Five Forces, and demand-side analysis.","p8.i":"→ SWOT + Porter's framework delivered",
+  "p9.t":"Chatbot using Botpress","p9.d":"Conversational AI chatbot using Botpress and Python for automated customer support on a food delivery service.","p9.i":"→ Explored Botpress limitations in complex queries",
+  "p10.t":"Website Analysis for SEO","p10.d":"Analysed website SEO metrics using Google Search Console and SEMrush to identify opportunities for search visibility improvements.","p10.i":"→ Meta tags, content structure & linking improvements",
+  "p11.t":"Medical Data Visualisation","p11.d":"Interactive visualisations of medical datasets to improve clinician understanding and support decision-making.","p11.i":"→ Improved data interpretation for developers & clinicians",
+  "p12.t":"Portfolio Website","p12.d":"Designed and built this dark-minimal portfolio — custom cursor, scroll animations, magnetic buttons, and a photography gallery.","p12.i":"→ Live at shankarnevermore.github.io",
+  "sl.ac":"Academic","ac.title":"Master's <b>thesis</b>","ac.deck":"Current research at the intersection of AI, ethics, and marketing strategy.",
+  "th.bdg":"Thesis · In Progress · 2025–Present","th.title":"Ethical Limits of AI in Hyper-Personalised Marketing",
+  "th.desc":"This thesis examines where AI-driven personalisation crosses ethical boundaries — exploring consent, algorithmic manipulation, data sovereignty, and regulatory frameworks (GDPR, AI Act). It proposes a practical ethics framework for marketers deploying AI at scale.",
+  "tm.u":"University","tm.s":"Supervisor","tm.sv":"Prof. Name","tm.p":"Programme","tm.pn":"MSc AI & Marketing Strategies","tm.st":"Status","tm.stv":"In Progress — 2026",
+  "sl.hob":"Hobbies","hb.title":"Beyond the <b>spreadsheet</b>",
+  "bc.t.l":"01 — Travel","bc.t.h":"Travelling the World","bc.t.p":"Exploring new markets, cultures, languages and ways of thinking. Every destination teaches me something that ends up in my work.","bc.t.c":"Countries","bc.t.ct":"Continents","bc.t.m":"Memories",
+  "bc.sp.l":"02 — Sport","bc.sp.h":"Active on Strava","bc.sp.p":"Cycling, running, hiking, swimming. Tracked and pushed on Strava — numbers don't lie.",
+  "str.cy":"Cycling","str.ru":"Running","str.hi":"Hiking","str.sw":"Swimming",
+  "bc.ph.l":"03 — Photography","bc.ph.h":"Photography","bc.ph.p":"Street, nightlife, nature and travel photography, 35mm & digital.","bc.ph.a":"View portfolio →",
+  "bc.fb.l":"04 — Football","bc.fb.h":"Football","bc.fb.p":"Playing and watching. xG, pressing metrics, and tactical analysis — feeds right into how I think about performance at work.",
+  "bc.gm.l":"05 — Gaming","bc.gm.h":"Video Games","bc.gm.p":"Strategy, open world, and narrative-driven games. Systems thinking transfers well to business problems.",
+  "bc.pu.l":"06 — Puzzles","bc.pu.h":"Puzzles & Brain Teasers","bc.pu.p":"Solving puzzles and brain teasers — sharpens pattern recognition and lateral thinking.",
+  "bc.mu.l":"07 — Music","bc.mu.h":"Music","bc.mu.p":"A playlist for every context. Music manages energy across long work sessions.",
+  "bc.co.l":"08 — Cooking","bc.co.h":"Cooking","bc.co.p":"Every trip inspires a dish. I cook like I build strategy — clear goal, good inputs, room to improvise.",
+  "sl.vol":"Volunteering","v.title":"Giving back & <b>community</b>",
+  "v1.o":"ESN Paris","v1.r":"Communication Volunteer","v1.d":"Managing social media and communications for a student community of 19k+ members.","v1.c1":"Community Support","v1.c2":"Social Media","v1.c3":"Content Creation",
+  "v2.o":"COP1","v2.r":"Event Organiser","v2.d":"Organised events to meet new people, build social connections and community networks.","v2.c1":"Social Events","v2.c2":"Ice Breakers","v2.c3":"Community Building",
+  "v3.o":"COP1","v3.r":"Grocery Distributor","v3.d":"Distributed groceries to local communities in need, coordinating logistics and volunteer efforts.","v3.c1":"Community Support","v3.c2":"Logistics","v3.c3":"Volunteer Coordination",
+  "c.title":"Let's <b>work together</b>","c.quote":"\"The best analysis means nothing if it doesn't reach the right people in <b>the right form</b>. Let's find a way to work together.\"","c.pl":"Photography Portfolio →",
+  "f.n":"Name","f.e":"Email","f.m":"Message","f.s":"Send Message",
+  "form.ok":"✓ Message sent! I'll get back to you soon.","form.err":"Something went wrong. Please email me directly."
+},
+fr:{
+  "nav.about":"À propos","nav.exp":"Expertise","nav.proj":"Projets","nav.ac":"Académique",
+  "nav.hob":"Loisirs","nav.vol":"Bénévolat","nav.con":"Contact","nav.photo":"Photographie ↗","nav.status":"Disponible",
+  "h.eyebrow":"Paris, France · Données · Marketing · IA",
+  "h.name":"Ponn Siva Shankar<br><b>Sekar</b>",
+  "h.tag":"Je transforme les données en décisions — en alliant rigueur analytique, stratégie marketing, outils IA et développement commercial pour créer une croissance mesurable.",
+  "h.cta1":"Voir mes projets","h.cta2":"Me contacter","h.scroll":"Défiler",
+  "r1":"Analyste de données","r2":"Stratège marketing","r3":"Business developer","r4":"IA &amp; Opérations",
+  "sl.about":"À propos","sl.exp":"Expertise","sl.proj":"Projets","sl.ac":"Académique","sl.hob":"Loisirs","sl.vol":"Bénévolat","sl.con":"Contact",
+  "a.p1":"Je suis <b>Ponn Siva Shankar Sekar</b>, analyste et stratège basé à <b>Paris</b>, à l'intersection des données, du marketing et de l'IA.",
+  "a.p2":"Mon travail couvre <b>l'analyse de marché</b>, <b>le conseil IA</b> et <b>la stratégie GTM</b> — traduire des données complexes en insights actionnables.",
+  "a.p3":"Je termine un <b>Master en IA &amp; Stratégies Marketing</b> et rédige ma thèse sur les limites éthiques de l'IA dans le marketing hyper-personnalisé.",
+  "a.cv":"Télécharger le CV →",
+  "sg.d":"Données & Analytique","sg.m":"Marketing","sg.b":"Dév. commercial","sg.a":"IA & Ops",
+  "e.title":"Ce que j'apporte <b>à l'équipe</b>","e.deck":"Cinq domaines où j'apporte un impact concret aux équipes et organisations.",
+  "sn.e":"Ans d'exp.","sn.p":"Projets","sn.i":"Secteurs","sn.l":"Langues",
+  "s1.t":"Analyse de données & Reporting","s1.d":"Données brutes → tableaux de bord, KPIs et insights business. SQL, Python, Power BI, Tableau.",
+  "s2.t":"Stratégie marketing","s2.d":"Campagnes data-driven, segmentation et optimisation des canaux. Du positionnement à la conversion.",
+  "s3.t":"Développement commercial","s3.d":"Opportunités de croissance et stratégies GTM alignées avec les réalités du marché.",
+  "s4.t":"IA en entreprise","s4.d":"NLP, pipelines ML, segmentation client et prompt engineering appliqués au marketing et aux opérations.",
+  "s5.t":"Opérations commerciales","s5.d":"Rationalisation des flux, conception de cadres et outils pour l'efficacité inter-équipes.",
+  "p.title":"Travaux <b>sélectionnés</b>","p.deck":"Mandats professionnels, projets académiques et side projects — chacun conçu pour résoudre un vrai problème.",
+  "leg.pr":"Professionnel","leg.pe":"Personnel","leg.si":"Annexe","leg.ac":"Académique",
+  "pf.all":"Tout","pf.pr":"Professionnel","pf.pe":"Personnel","pf.si":"Annexe","pf.ac":"Académique",
+  "bdg.pr":"Pro","bdg.pe":"Personnel","bdg.si":"Annexe","bdg.ac":"Académique",
+  "p1.t":"Détection d'anomalies dans le tractus GI","p1.d":"Projet de vision par ordinateur pour détecter 7 types d'anomalies dans des images du tractus GI via deep learning.","p1.i":"↑ 18% plus rapide que le modèle de base",
+  "p2.t":"Performance commerciale & Tableaux KPI","p2.d":"Nettoyage et structuration des données commerciales brutes, puis création de tableaux de bord interactifs.","p2.i":"→ Pipeline complet des données brutes au tableau de bord",
+  "p3.t":"Stratégie de transformation numérique — Nike","p3.d":"Étude de cas sur l'introduction de la Technologie 4.0 et des pratiques durables dans les opérations retail de Nike.","p3.i":"→ Rapport stratégique de 10 pages",
+  "p4.t":"Analytique produit & performance client","p4.d":"Pipeline Python pour clusteriser clients et produits par métriques de performance.","p4.i":"→ Modèle de segmentation actionnable",
+  "p5.t":"Analytique digitale & analyse du parcours utilisateur","p5.d":"Analyse des parcours utilisateurs et métriques de performance digitale pour informer les décisions produit et marketing.","p5.i":"→ Présentation livrée pour améliorer la portée du site",
+  "p6.t":"Analyse de sentiments","p6.d":"Nettoyage, prétraitement et normalisation des données textuelles pour la modélisation NLP.","p6.i":"→ Étude comparative entre modèles NLP",
+  "p7.t":"Automatisation des flux","p7.d":"Automatisation des tâches répétitives pour la migration cloud — intégrations SOAP API et pipelines Jenkins.","p7.i":"↑ 15% de gain de productivité",
+  "p8.t":"Analyse de marché & identification d'opportunités","p8.d":"Étude des tendances marché pour une startup sport-tech — SWOT et Porter's Five Forces.","p8.i":"→ Cadre SWOT + Porter livré",
+  "p9.t":"Chatbot avec Botpress","p9.d":"Chatbot IA conversationnel via Botpress et Python pour le support client d'une livraison de nourriture.","p9.i":"→ Exploration des limites de Botpress",
+  "p10.t":"Analyse SEO de site web","p10.d":"Analyse des métriques SEO via Google Search Console et SEMrush pour améliorer la visibilité.","p10.i":"→ Améliorations balises meta, structure et maillage",
+  "p11.t":"Visualisation de données médicales","p11.d":"Visualisations interactives de données médicales pour améliorer la compréhension clinique.","p11.i":"→ Meilleure interprétation pour développeurs et cliniciens",
+  "p12.t":"Site portfolio","p12.d":"Conception et développement de ce portfolio dark-minimal — curseur, animations, boutons magnétiques et galerie photo.","p12.i":"→ En ligne sur shankarnevermore.github.io",
+  "ac.title":"Thèse de <b>master</b>","ac.deck":"Recherche actuelle à l'intersection de l'IA, de l'éthique et de la stratégie marketing.",
+  "th.bdg":"Thèse · En cours · 2025–Présent","th.title":"Limites éthiques de l'IA dans le marketing hyper-personnalisé",
+  "th.desc":"Cette thèse examine où la personnalisation pilotée par l'IA franchit des frontières éthiques — consentement, manipulation algorithmique, souveraineté des données et cadres réglementaires (RGPD, AI Act).",
+  "tm.u":"Université","tm.s":"Directeur","tm.sv":"Prof. Nom","tm.p":"Programme","tm.pn":"MSc IA & Stratégies Marketing","tm.st":"Statut","tm.stv":"En cours — 2026",
+  "hb.title":"Au-delà du <b>tableur</b>",
+  "bc.t.l":"01 — Voyage","bc.t.h":"Voyager dans le monde","bc.t.p":"Explorer de nouveaux marchés, cultures, langues et façons de penser. Chaque destination nourrit mon travail.","bc.t.c":"Pays","bc.t.ct":"Continents","bc.t.m":"Souvenirs",
+  "bc.sp.l":"02 — Sport","bc.sp.h":"Actif sur Strava","bc.sp.p":"Cyclisme, course, randonnée, natation. Suivi sur Strava — les chiffres ne mentent pas.",
+  "str.cy":"Cyclisme","str.ru":"Course","str.hi":"Randonnée","str.sw":"Natation",
+  "bc.ph.l":"03 — Photographie","bc.ph.h":"Photographie","bc.ph.p":"Photo de rue, nuit, nature et voyage, argentique & numérique.","bc.ph.a":"Voir le portfolio →",
+  "bc.fb.l":"04 — Football","bc.fb.h":"Football","bc.fb.p":"Jouer et regarder. xG, pressing, analyse tactique — nourrit directement ma façon de penser la performance.",
+  "bc.gm.l":"05 — Jeux vidéo","bc.gm.h":"Jeux vidéo","bc.gm.p":"Stratégie, open world et jeux narratifs. La pensée systémique se transfère bien aux problèmes business.",
+  "bc.pu.l":"06 — Puzzles","bc.pu.h":"Puzzles & Casse-têtes","bc.pu.p":"Résoudre des puzzles — aiguise la reconnaissance de schémas et la pensée latérale.",
+  "bc.mu.l":"07 — Musique","bc.mu.h":"Musique","bc.mu.p":"Une playlist pour chaque contexte. La musique gère l'énergie lors des longues sessions de travail.",
+  "bc.co.l":"08 — Cuisine","bc.co.h":"Cuisine","bc.co.p":"Chaque voyage inspire un plat. Je cuisine comme je construis une stratégie.",
+  "v.title":"Engagement & <b>communauté</b>",
+  "v1.o":"ESN Paris","v1.r":"Bénévole Communication","v1.d":"Gestion des réseaux sociaux et communications pour une communauté étudiante de 19k+ membres.","v1.c1":"Soutien communautaire","v1.c2":"Réseaux sociaux","v1.c3":"Création de contenu",
+  "v2.o":"COP1","v2.r":"Organisateur d'événements","v2.d":"Organisation d'événements pour créer des liens sociaux et construire des réseaux communautaires.","v2.c1":"Événements sociaux","v2.c2":"Ice Breakers","v2.c3":"Construction communautaire",
+  "v3.o":"COP1","v3.r":"Distributeur alimentaire","v3.d":"Distribution de denrées alimentaires aux communautés locales dans le besoin, coordination logistique.","v3.c1":"Soutien communautaire","v3.c2":"Logistique","v3.c3":"Coordination",
+  "c.title":"Travaillons <b>ensemble</b>","c.quote":"« La meilleure analyse ne vaut rien si elle n'atteint pas les bonnes personnes sous <b>la bonne forme</b>. »","c.pl":"Portfolio Photo →",
+  "f.n":"Nom","f.e":"Email","f.m":"Message","f.s":"Envoyer",
+  "form.ok":"✓ Message envoyé ! Je vous répondrai rapidement.","form.err":"Une erreur s'est produite. Contactez-moi par email directement."
+}};
+
+let lang='en';
+function setLang(l){
+  lang=l;
+  document.querySelectorAll('[data-t]').forEach(el=>{
+    const v=T[l][el.dataset.t];
+    if(v===undefined)return;
+    // Don't overwrite inputs/textareas
+    if(el.tagName==='INPUT'||el.tagName==='TEXTAREA')return;
+    el.innerHTML=v;
+  });
+  document.getElementById('btn-en').classList.toggle('active',l==='en');
+  document.getElementById('btn-fr').classList.toggle('active',l==='fr');
+  document.documentElement.lang=l;
+  // Reset scramble cache so translated text scrambles correctly
+  document.querySelectorAll('[data-scramble]').forEach(el=>delete el.dataset.orig);
+}
+setLang('en');
+
+/* CURSOR */
+const cur=document.getElementById('cursor'),ring=document.getElementById('cursor-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+(function lerp(){rx+=(mx-rx)*.11;ry+=(my-ry)*.11;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(lerp);})();
+
+/* MAGNETIC */
+document.querySelectorAll('.magnetic').forEach(wrap=>{
+  const el=wrap.querySelector('a,button');if(!el)return;
+  wrap.addEventListener('mousemove',e=>{
+    const r=wrap.getBoundingClientRect();
+    el.style.transform=`translate(${(e.clientX-r.left-r.width/2)*.38}px,${(e.clientY-r.top-r.height/2)*.38}px)`;
+  });
+  wrap.addEventListener('mouseleave',()=>{el.style.transform='';});
+});
+
+/* SCRAMBLE */
+const CH='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+function scramble(el){
+  const orig=el.dataset.orig||(el.dataset.orig=el.textContent);
+  let f=0,res=0;
+  const id=setInterval(()=>{
+    el.textContent=orig.split('').map((c,i)=>{
+      if(c===' ')return ' ';if(i<res)return orig[i];
+      return CH[Math.floor(Math.random()*CH.length)];
+    }).join('');
+    if(f%2===0)res++;
+    if(res>orig.length){el.textContent=orig;clearInterval(id);}f++;
+  },28);
+}
+document.querySelectorAll('[data-scramble]').forEach(el=>{
+  el.addEventListener('mouseenter',()=>scramble(el));
+});
+
+/* SCROLL REVEAL */
+const obs=new IntersectionObserver(es=>{
+  es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target);}});
+},{threshold:.09,rootMargin:'0px 0px -50px 0px'});
+document.querySelectorAll('[data-r],[data-sg]').forEach(el=>obs.observe(el));
+
+/* PROJECT FILTER */
+document.querySelectorAll('.pf').forEach(b=>{
+  b.addEventListener('click',()=>{
+    document.querySelectorAll('.pf').forEach(x=>x.classList.remove('on'));
+    b.classList.add('on');
+    const f=b.dataset.f;
+    document.querySelectorAll('.pc').forEach(c=>{
+      c.style.display=(f==='all'||c.dataset.cat===f)?'flex':'none';
+    });
+  });
+});
+
+/* NAV ACTIVE */
+window.addEventListener('scroll',()=>{
+  let id='';
+  document.querySelectorAll('section[id]').forEach(s=>{if(window.scrollY>=s.offsetTop-100)id=s.id;});
+  document.querySelectorAll('.nav-links a').forEach(a=>{a.classList.toggle('active-nav',a.getAttribute('href')==='#'+id);});
+});
+
+/* 3D TILT */
+document.querySelectorAll('.pc,.svc-card').forEach(card=>{
+  card.addEventListener('mousemove',e=>{
+    const r=card.getBoundingClientRect();
+    const dx=(e.clientX-r.left-r.width/2)/r.width;
+    const dy=(e.clientY-r.top-r.height/2)/r.height;
+    card.style.transform=`perspective(700px) rotateX(${-dy*5}deg) rotateY(${dx*5}deg) scale(1.01)`;
+  });
+  card.addEventListener('mouseleave',()=>{card.style.transform='';});
+});
+
+/* CONTACT FORM — sends via Formspree (free, no backend needed)
+   ► Replace YOUR_FORM_ID below with your Formspree endpoint.
+   ► Sign up free at https://formspree.io → New Form → copy the form ID.
+   ► The form will send an email to ponnsivashankars@gmail.com. */
+async function sendMessage(){
+  const name  = document.getElementById('f-name').value.trim();
+  const email = document.getElementById('f-email').value.trim();
+  const msg   = document.getElementById('f-msg').value.trim();
+  const status= document.getElementById('form-status');
+  const btn   = document.getElementById('send-btn');
+
+  status.className='form-status'; status.textContent='';
+
+  if(!name||!email||!msg){
+    status.className='form-status error';
+    status.textContent= lang==='fr'
+      ? '⚠ Veuillez remplir tous les champs.'
+      : '⚠ Please fill in all fields.';
+    return;
+  }
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+    status.className='form-status error';
+    status.textContent= lang==='fr' ? '⚠ Email invalide.' : '⚠ Please enter a valid email.';
+    return;
+  }
+
+  btn.classList.add('btn-loading');
+  btn.querySelector('span').textContent = lang==='fr' ? 'Envoi...' : 'Sending...';
+
+  try {
+    // Using Formspree — replace xyzabcde with your actual form ID
+    const res = await fetch('https://formspree.io/f/YOUR_FORM_ID', {
+      method:'POST',
+      headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body: JSON.stringify({name, email, message:msg,
+        _subject:`Portfolio contact from ${name}`,
+        _replyto: email})
+    });
+
+    if(res.ok){
+      status.className='form-status success';
+      status.textContent=T[lang]['form.ok'];
+      document.getElementById('f-name').value='';
+      document.getElementById('f-email').value='';
+      document.getElementById('f-msg').value='';
+    } else {
+      throw new Error('Server error');
+    }
+  } catch(e) {
+    // Fallback: open mailto so the message is never lost
+    const mailtoLink=`mailto:ponnsivashankars@gmail.com?subject=Portfolio contact from ${encodeURIComponent(name)}&body=${encodeURIComponent(msg+'\n\nFrom: '+email)}`;
+    status.className='form-status error';
+    status.innerHTML=`${T[lang]['form.err']} <a href="${mailtoLink}" style="color:inherit;text-decoration:underline">Click here to send via email app.</a>`;
+  }
+
+  btn.classList.remove('btn-loading');
+  btn.querySelector('span').textContent=T[lang]['f.s'];
+}
+</script>
+</body>
+</html>
